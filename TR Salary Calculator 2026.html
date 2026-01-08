@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaş Hesaplama | 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 18px 18px 52px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        input::placeholder {
+            color: #475569;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+
+        .results-container {
+            display: none;
+        }
+
+        .result-main {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .result-label {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .result-amount {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .highlight-text {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .comparison-section {
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            margin-top: 20px;
+        }
+
+        .comparison-title {
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .comparison-value {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        thead tr {
+            background: rgba(59, 130, 246, 0.1);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+            text-align: right;
+        }
+
+        td {
+            padding: 12px 8px;
+            color: #e2e8f0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+        }
+
+        td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        tfoot tr {
+            background: rgba(16, 185, 129, 0.1);
+            border-top: 2px solid rgba(16, 185, 129, 0.3);
+        }
+
+        tfoot td {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .deduction-box {
+            background: rgba(239, 68, 68, 0.1);
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .deduction-box .comparison-label {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .deduction-box .comparison-value {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .info-box p {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .result-amount {
+                font-size: 30px;
+            }
+
+            th, td {
+                padding: 10px 6px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="logo">💰</div>
+            <h1>Maaş Hesaplama Platformu</h1>
+            <p>2026 yılı güncel vergi hesaplamaları</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-title">
+                    📊 Maaş Bilgileriniz
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Mevcut Brüt Maaş</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon">₺</div>
+                        <input type="number" id="currentSalary" placeholder="25000" min="0" step="100">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Zam Oranı</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon">%</div>
+                        <input type="number" id="increaseRate" placeholder="15" min="0" max="100" step="0.1">
+                    </div>
+                </div>
+
+                <button class="calculate-btn" onclick="hesapla()">Hesapla</button>
+
+                <div class="info-box">
+                    <p><strong>💡 Önemli:</strong> Gelir vergisi yıl içinde kümülatif olarak hesaplanır.</p>
+                    <p>Ocak ayında düşük vergi diliminden kesilirken, yıl ilerledikçe üst dilimlere geçilir ve daha fazla vergi kesilir.</p>
+                    <p>Tabloda her ayın <strong>gerçek net maaşı</strong> gösterilmektedir.</p>
+                </div>
+            </div>
+
+            <div class="card results-container" id="results">
+                <div class="card-title">
+                    ✨ Hesaplama Sonuçları
+                </div>
+
+                <div class="result-main">
+                    <div class="result-label">Yeni Brüt Maaş</div>
+                    <div class="result-amount" id="newGross">₺ 0</div>
+                    <div class="result-subtitle">Vergi öncesi tutar</div>
+                </div>
+
+                <div class="result-main">
+                    <div class="result-label">Ortalama Aylık Net</div>
+                    <div class="result-amount" id="avgNet">₺ 0</div>
+                    <div class="result-subtitle">12 aylık ortalama</div>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="highlight-text" id="increase">
+                        📈 Hesaplanıyor...
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Toplam Yıllık Net</div>
+                        <div class="stat-value" id="totalYearlyNet">₺ 0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Yıllık Artış</div>
+                        <div class="stat-value" id="yearlyIncrease">₺ 0</div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">Özet Karşılaştırma</div>
+                    
+                    <div class="comparison-item">
+                        <span class="comparison-label">Eski Ort. Net Maaş</span>
+                        <span class="comparison-value" id="oldAvgNet">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Yeni Ort. Net Maaş</span>
+                        <span class="comparison-value" id="newAvgNet">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Artış Yüzdesi</span>
+                        <span class="comparison-value" id="netPercent">%0</span>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">📅 12 Aylık Detaylı Gelir Tablosu</div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>AY</th>
+                                    <th>NET MAAŞ</th>
+                                    <th>VERGİ</th>
+                                    <th>BİRİKİM</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyTableBody">
+                                <!-- JavaScript ile doldurulacak -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>TOPLAM</td>
+                                    <td id="totalYearly">₺ 0</td>
+                                    <td id="totalTax">₺ 0</td>
+                                    <td id="totalSavings">₺ 0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">💸 Aylık Ortalama Kesintiler</div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">SGK İşçi Payı (%14)</span>
+                        <span class="comparison-value" id="sgkAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">İşsizlik Sigortası (%1)</span>
+                        <span class="comparison-value" id="unemploymentAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Gelir Vergisi (Ortalama)</span>
+                        <span class="comparison-value" id="incomeTaxAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Damga Vergisi (%0.759)</span>
+                        <span class="comparison-value" id="stampTaxAmount">₺ 0</span>
+                    </div>
+                    <div class="deduction-box comparison-item">
+                        <span class="comparison-label">Aylık Ort. Toplam Kesinti</span>
+                        <span class="comparison-value" id="totalDeductions">₺ 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Hesaplamalar 2026 yılı Türkiye vergi oranlarına göre yapılmaktadır</p>
+            <p>SGK (%14) + İşsizlik (%1) + Gelir Vergisi (Kümülatif) + Damga Vergisi (%0.759) dahildir</p>
+            <p style="margin-top: 15px; font-weight: 600; color: #94a3b8;">
+                Tasarım ve Geliştirme: <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Metin Demirtel</span> © 2026
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var ayIsimleri = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 
+                          'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+
+        // Kümülatif gelir vergisi hesaplama fonksiyonu
+        function kumVergiHesapla(yillikKumulatifMatrah) {
+            var vergi = 0;
+            
+            if (yillikKumulatifMatrah <= 110000) {
+                vergi = yillikKumulatifMatrah * 0.15;
+            } else if (yillikKumulatifMatrah <= 230000) {
+                vergi = 110000 * 0.15 + (yillikKumulatifMatrah - 110000) * 0.20;
+            } else if (yillikKumulatifMatrah <= 580000) {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + (yillikKumulatifMatrah - 230000) * 0.27;
+            } else if (yillikKumulatifMatrah <= 3000000) {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + (yillikKumulatifMatrah - 580000) * 0.35;
+            } else {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + 2420000 * 0.35 + (yillikKumulatifMatrah - 3000000) * 0.40;
+            }
+            
+            return vergi;
+        }
+
+        // 12 aylık detaylı hesaplama
+        function yillikDetayHesapla(aylikBrut) {
+            var aylikDetaylar = [];
+            var kumulatifMatrah = 0;
+            var oncekiAyKumulatifVergi = 0;
+            
+            for (var i = 0; i < 12; i++) {
+                var sgk = aylikBrut * 0.14;
+                var issizlik = aylikBrut * 0.01;
+                var damga = aylikBrut * 0.00759;
+                
+                var aylikMatrah = aylikBrut - sgk - issizlik;
+                kumulatifMatrah += aylikMatrah;
+                
+                // Bu aya kadar ödenmesi gereken toplam vergi
+                var kumulatifVergi = kumVergiHesapla(kumulatifMatrah);
+                
+                // Bu ayın vergi kesintisi = Toplam vergi - Önceki aya kadar kesilen vergi
+                var buAyVergi = kumulatifVergi - oncekiAyKumulatifVergi;
+                
+                var netMaas = aylikBrut - sgk - issizlik - buAyVergi - damga;
+                
+                aylikDetaylar.push({
+                    ay: i + 1,
+                    brut: aylikBrut,
+                    sgk: sgk,
+                    issizlik: issizlik,
+                    gelirVergisi: buAyVergi,
+                    damga: damga,
+                    net: netMaas,
+                    toplamKesinti: sgk + issizlik + buAyVergi + damga
+                });
+                
+                oncekiAyKumulatifVergi = kumulatifVergi;
+            }
+            
+            return aylikDetaylar;
+        }
+
+        function paraFormat(miktar) {
+            return miktar.toLocaleString('tr-TR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function hesapla() {
+            var mevcutMaas = parseFloat(document.getElementById('currentSalary').value);
+            var zamOrani = parseFloat(document.getElementById('increaseRate').value);
+
+            if (!mevcutMaas || !zamOrani) {
+                alert('⚠️ Lütfen tüm alanları doldurun!');
+                return;
+            }
+
+            if (mevcutMaas < 0 || zamOrani < 0) {
+                alert('⚠️ Lütfen pozitif değerler girin!');
+                return;
+            }
+
+            var yeniBrut = mevcutMaas * (1 + zamOrani / 100);
+            
+            // Eski ve yeni maaşlar için 12 aylık detaylı hesaplama
+            var eskiDetaylar = yillikDetayHesapla(mevcutMaas);
+            var yeniDetaylar = yillikDetayHesapla(yeniBrut);
+            
+            // Yıllık toplamlar
+            var eskiToplamNet = 0;
+            var yeniToplamNet = 0;
+            var yeniToplamVergi = 0;
+            
+            for (var i = 0; i < 12; i++) {
+                eskiToplamNet += eskiDetaylar[i].net;
+                yeniToplamNet += yeniDetaylar[i].net;
+                yeniToplamVergi += yeniDetaylar[i].gelirVergisi;
+            }
+            
+            var eskiOrtNet = eskiToplamNet / 12;
+            var yeniOrtNet = yeniToplamNet / 12;
+            var yillikArtis = yeniToplamNet - eskiToplamNet;
+            var netYuzde = ((yeniOrtNet - eskiOrtNet) / eskiOrtNet * 100).toFixed(2);
+            
+            // Ortalama kesintiler (son ayın değerleri referans alınabilir veya ortalama)
+            var ortSgk = yeniBrut * 0.14;
+            var ortIssizlik = yeniBrut * 0.01;
+            var ortVergi = yeniToplamVergi / 12;
+            var ortDamga = yeniBrut * 0.00759;
+            var ortToplamKesinti = ortSgk + ortIssizlik + ortVergi + ortDamga;
+
+            // Temel sonuçlar
+            document.getElementById('newGross').textContent = '₺ ' + paraFormat(yeniBrut);
+            document.getElementById('avgNet').textContent = '₺ ' + paraFormat(yeniOrtNet);
+            document.getElementById('oldAvgNet').textContent = '₺ ' + paraFormat(eskiOrtNet);
+            document.getElementById('newAvgNet').textContent = '₺ ' + paraFormat(yeniOrtNet);
+            document.getElementById('totalYearlyNet').textContent = '₺ ' + paraFormat(yeniToplamNet);
+            document.getElementById('yearlyIncrease').textContent = '₺ ' + paraFormat(yillikArtis);
+            document.getElementById('netPercent').textContent = '%' + netYuzde;
+            document.getElementById('increase').textContent = '📈 Yılda ' + paraFormat(yillikArtis) + ' ₺ fazla kazanacaksınız!';
+
+            // Kesinti detayları
+            document.getElementById('sgkAmount').textContent = '₺ ' + paraFormat(ortSgk);
+            document.getElementById('unemploymentAmount').textContent = '₺ ' + paraFormat(ortIssizlik);
+            document.getElementById('incomeTaxAmount').textContent = '₺ ' + paraFormat(ortVergi);
+            document.getElementById('stampTaxAmount').textContent = '₺ ' + paraFormat(ortDamga);
+            document.getElementById('totalDeductions').textContent = '₺ ' + paraFormat(ortToplamKesinti);
+
+            // 12 Aylık Tablo
+            var tableBody = document.getElementById('monthlyTableBody');
+            tableBody.innerHTML = '';
+            var birikimToplam = 0;
+            var toplamVergi = 0;
+
+            for (var i = 0; i < 12; i++) {
+                birikimToplam += yeniDetaylar[i].net;
+                toplamVergi += yeniDetaylar[i].gelirVergisi;
+                
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                
+                cell1.textContent = ayIsimleri[i];
+                cell2.textContent = '₺ ' + paraFormat(yeniDetaylar[i].net);
+                cell3.textContent = '₺ ' + paraFormat(yeniDetaylar[i].gelirVergisi);
+                cell4.textContent = '₺ ' + paraFormat(birikimToplam);
+            }
+
+            document.getElementById('totalYearly').textContent = '₺ ' + paraFormat(yeniToplamNet);
+            document.getElementById('totalTax').textContent = '₺ ' + paraFormat(toplamVergi);
+            document.getElementById('totalSavings').textContent = '₺ ' + paraFormat(birikimToplam);
+
+            document.getElementById('results').style.display = 'block';
+            
+            setTimeout(function() {
+                document.getElementById('results').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }, 100);
+        }
+
+        // Enter tuşu ile hesaplama
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                hesapla();
+            }
+        });
+    </script>
+</body>
+</html>

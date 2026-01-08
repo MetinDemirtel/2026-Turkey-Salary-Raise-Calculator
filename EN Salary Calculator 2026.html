@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator | 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 18px 18px 52px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        input::placeholder {
+            color: #475569;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+
+        .results-container {
+            display: none;
+        }
+
+        .result-main {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .result-label {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .result-amount {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .highlight-text {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .comparison-section {
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            margin-top: 20px;
+        }
+
+        .comparison-title {
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .comparison-value {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        thead tr {
+            background: rgba(59, 130, 246, 0.1);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+            text-align: right;
+        }
+
+        td {
+            padding: 12px 8px;
+            color: #e2e8f0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+        }
+
+        td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        tfoot tr {
+            background: rgba(16, 185, 129, 0.1);
+            border-top: 2px solid rgba(16, 185, 129, 0.3);
+        }
+
+        tfoot td {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .deduction-box {
+            background: rgba(239, 68, 68, 0.1);
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .deduction-box .comparison-label {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .deduction-box .comparison-value {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .info-box p {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .result-amount {
+                font-size: 30px;
+            }
+
+            th, td {
+                padding: 10px 6px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="logo">💰</div>
+            <h1>Salary Calculator Platform</h1>
+            <p>Updated tax calculations for 2026</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-title">
+                    📊 Your Salary Information
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Current Gross Salary</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon">₺</div>
+                        <input type="number" id="currentSalary" placeholder="25000" min="0" step="100">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Raise Percentage</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon">%</div>
+                        <input type="number" id="increaseRate" placeholder="15" min="0" max="100" step="0.1">
+                    </div>
+                </div>
+
+                <button class="calculate-btn" onclick="calculate()">Calculate</button>
+
+                <div class="info-box">
+                    <p><strong>💡 Important:</strong> Income tax is calculated cumulatively throughout the year.</p>
+                    <p>Lower tax is withheld in January, while as the year progresses, higher tax brackets apply and more tax is deducted.</p>
+                    <p>The table shows the <strong>actual net salary</strong> for each month.</p>
+                </div>
+            </div>
+
+            <div class="card results-container" id="results">
+                <div class="card-title">
+                    ✨ Calculation Results
+                </div>
+
+                <div class="result-main">
+                    <div class="result-label">New Gross Salary</div>
+                    <div class="result-amount" id="newGross">₺ 0</div>
+                    <div class="result-subtitle">Pre-tax amount</div>
+                </div>
+
+                <div class="result-main">
+                    <div class="result-label">Average Monthly Net</div>
+                    <div class="result-amount" id="avgNet">₺ 0</div>
+                    <div class="result-subtitle">12-month average</div>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="highlight-text" id="increase">
+                        📈 Calculating...
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Annual Net</div>
+                        <div class="stat-value" id="totalYearlyNet">₺ 0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Annual Increase</div>
+                        <div class="stat-value" id="yearlyIncrease">₺ 0</div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">Summary Comparison</div>
+                    
+                    <div class="comparison-item">
+                        <span class="comparison-label">Old Avg. Net Salary</span>
+                        <span class="comparison-value" id="oldAvgNet">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">New Avg. Net Salary</span>
+                        <span class="comparison-value" id="newAvgNet">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Increase Percentage</span>
+                        <span class="comparison-value" id="netPercent">%0</span>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">📅 12-Month Detailed Income Table</div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>MONTH</th>
+                                    <th>NET SALARY</th>
+                                    <th>TAX</th>
+                                    <th>CUMULATIVE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>TOTAL</td>
+                                    <td id="totalYearly">₺ 0</td>
+                                    <td id="totalTax">₺ 0</td>
+                                    <td id="totalSavings">₺ 0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-title">💸 Average Monthly Deductions</div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">SSI Employee Share (14%)</span>
+                        <span class="comparison-value" id="sgkAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Unemployment Insurance (1%)</span>
+                        <span class="comparison-value" id="unemploymentAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Income Tax (Average)</span>
+                        <span class="comparison-value" id="incomeTaxAmount">₺ 0</span>
+                    </div>
+                    <div class="comparison-item">
+                        <span class="comparison-label">Stamp Duty (0.759%)</span>
+                        <span class="comparison-value" id="stampTaxAmount">₺ 0</span>
+                    </div>
+                    <div class="deduction-box comparison-item">
+                        <span class="comparison-label">Monthly Avg. Total Deduction</span>
+                        <span class="comparison-value" id="totalDeductions">₺ 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Calculations are based on 2026 Turkey tax rates</p>
+            <p>SSI (14%) + Unemployment (1%) + Income Tax (Cumulative) + Stamp Duty (0.759%) included</p>
+            <p style="margin-top: 15px; font-weight: 600; color: #94a3b8;">
+                Design & Development: <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Metin Demirtel</span> © 2026
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+
+        // Cumulative income tax calculation function
+        function calculateCumulativeTax(annualCumulativeBase) {
+            var tax = 0;
+            
+            if (annualCumulativeBase <= 110000) {
+                tax = annualCumulativeBase * 0.15;
+            } else if (annualCumulativeBase <= 230000) {
+                tax = 110000 * 0.15 + (annualCumulativeBase - 110000) * 0.20;
+            } else if (annualCumulativeBase <= 580000) {
+                tax = 110000 * 0.15 + 120000 * 0.20 + (annualCumulativeBase - 230000) * 0.27;
+            } else if (annualCumulativeBase <= 3000000) {
+                tax = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + (annualCumulativeBase - 580000) * 0.35;
+            } else {
+                tax = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + 2420000 * 0.35 + (annualCumulativeBase - 3000000) * 0.40;
+            }
+            
+            return tax;
+        }
+
+        // 12-month detailed calculation
+        function calculateYearlyDetails(monthlyGross) {
+            var monthlyDetails = [];
+            var cumulativeBase = 0;
+            var previousMonthCumulativeTax = 0;
+            
+            for (var i = 0; i < 12; i++) {
+                var ssi = monthlyGross * 0.14;
+                var unemployment = monthlyGross * 0.01;
+                var stamp = monthlyGross * 0.00759;
+                
+                var monthlyBase = monthlyGross - ssi - unemployment;
+                cumulativeBase += monthlyBase;
+                
+                // Total tax to be paid up to this month
+                var cumulativeTax = calculateCumulativeTax(cumulativeBase);
+                
+                // This month's tax = Total tax - Tax paid in previous months
+                var thisMonthTax = cumulativeTax - previousMonthCumulativeTax;
+                
+                var netSalary = monthlyGross - ssi - unemployment - thisMonthTax - stamp;
+                
+                monthlyDetails.push({
+                    month: i + 1,
+                    gross: monthlyGross,
+                    ssi: ssi,
+                    unemployment: unemployment,
+                    incomeTax: thisMonthTax,
+                    stamp: stamp,
+                    net: netSalary,
+                    totalDeduction: ssi + unemployment + thisMonthTax + stamp
+                });
+                
+                previousMonthCumulativeTax = cumulativeTax;
+            }
+            
+            return monthlyDetails;
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function calculate() {
+            var currentSalary = parseFloat(document.getElementById('currentSalary').value);
+            var increaseRate = parseFloat(document.getElementById('increaseRate').value);
+
+            if (!currentSalary || !increaseRate) {
+                alert('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            if (currentSalary < 0 || increaseRate < 0) {
+                alert('⚠️ Please enter positive values!');
+                return;
+            }
+
+            var newGross = currentSalary * (1 + increaseRate / 100);
+            
+            // 12-month detailed calculation for old and new salaries
+            var oldDetails = calculateYearlyDetails(currentSalary);
+            var newDetails = calculateYearlyDetails(newGross);
+            
+            // Annual totals
+            var oldTotalNet = 0;
+            var newTotalNet = 0;
+            var newTotalTax = 0;
+            
+            for (var i = 0; i < 12; i++) {
+                oldTotalNet += oldDetails[i].net;
+                newTotalNet += newDetails[i].net;
+                newTotalTax += newDetails[i].incomeTax;
+            }
+            
+            var oldAvgNet = oldTotalNet / 12;
+            var newAvgNet = newTotalNet / 12;
+            var yearlyIncrease = newTotalNet - oldTotalNet;
+            var netPercent = ((newAvgNet - oldAvgNet) / oldAvgNet * 100).toFixed(2);
+            
+            // Average deductions
+            var avgSsi = newGross * 0.14;
+            var avgUnemployment = newGross * 0.01;
+            var avgTax = newTotalTax / 12;
+            var avgStamp = newGross * 0.00759;
+            var avgTotalDeduction = avgSsi + avgUnemployment + avgTax + avgStamp;
+
+            // Basic results
+            document.getElementById('newGross').textContent = '₺ ' + formatCurrency(newGross);
+            document.getElementById('avgNet').textContent = '₺ ' + formatCurrency(newAvgNet);
+            document.getElementById('oldAvgNet').textContent = '₺ ' + formatCurrency(oldAvgNet);
+            document.getElementById('newAvgNet').textContent = '₺ ' + formatCurrency(newAvgNet);
+            document.getElementById('totalYearlyNet').textContent = '₺ ' + formatCurrency(newTotalNet);
+            document.getElementById('yearlyIncrease').textContent = '₺ ' + formatCurrency(yearlyIncrease);
+            document.getElementById('netPercent').textContent = '%' + netPercent;
+            document.getElementById('increase').textContent = '📈 You will earn ₺' + formatCurrency(yearlyIncrease) + ' more per year!';
+
+            // Deduction details
+            document.getElementById('sgkAmount').textContent = '₺ ' + formatCurrency(avgSsi);
+            document.getElementById('unemploymentAmount').textContent = '₺ ' + formatCurrency(avgUnemployment);
+            document.getElementById('incomeTaxAmount').textContent = '₺ ' + formatCurrency(avgTax);
+            document.getElementById('stampTaxAmount').textContent = '₺ ' + formatCurrency(avgStamp);
+            document.getElementById('totalDeductions').textContent = '₺ ' + formatCurrency(avgTotalDeduction);
+
+            // 12-Month Table
+            var tableBody = document.getElementById('monthlyTableBody');
+            tableBody.innerHTML = '';
+            var cumulativeTotal = 0;
+            var totalTax = 0;
+
+            for (var i = 0; i < 12; i++) {
+                cumulativeTotal += newDetails[i].net;
+                totalTax += newDetails[i].incomeTax;
+                
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                
+                cell1.textContent = monthNames[i];
+                cell2.textContent = '₺ ' + formatCurrency(newDetails[i].net);
+                cell3.textContent = '₺ ' + formatCurrency(newDetails[i].incomeTax);
+                cell4.textContent = '₺ ' + formatCurrency(cumulativeTotal);
+            }
+
+            document.getElementById('totalYearly').textContent = '₺ ' + formatCurrency(newTotalNet);
+            document.getElementById('totalTax').textContent = '₺ ' + formatCurrency(totalTax);
+            document.getElementById('totalSavings').textContent = '₺ ' + formatCurrency(cumulativeTotal);
+
+            document.getElementById('results').style.display = 'block';
+            
+            setTimeout(function() {
+                document.getElementById('results').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }, 100);
+        }
+
+        // Calculate with Enter key
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
