@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salary Calculator | 2026</title>
+    <title>Salary Analysis | 2026</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
         * {
             margin: 0;
@@ -14,97 +14,130 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f172a;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #0a0a0a;
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
+            padding: 24px 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .main-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 32px 40px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
         }
 
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
         }
 
-        .header h1 {
-            color: #ffffff;
-            font-size: 36px;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            color: #0a0a0a;
+            font-size: 28px;
             font-weight: 800;
-            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
         }
 
-        .header p {
-            color: #94a3b8;
-            font-size: 16px;
+        .header-left p {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .header-badge {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 12px 20px;
+        }
+
+        .header-badge-label {
+            color: #6c757d;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .header-badge-value {
+            color: #3b82f6;
+            font-size: 18px;
+            font-weight: 800;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: start;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
         }
 
         .card {
-            background: rgba(30, 41, 59, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 35px;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-header {
+            margin-bottom: 24px;
         }
 
         .card-title {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            color: #0a0a0a;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .input-label {
             display: block;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: #495057;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
         }
 
         .input-wrapper {
@@ -113,203 +146,342 @@
 
         .input-icon {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #64748b;
-            font-size: 20px;
-            pointer-events: none;
+            color: #adb5bd;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         input {
             width: 100%;
-            padding: 18px 18px 18px 52px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 2px solid rgba(148, 163, 184, 0.2);
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            padding: 16px 16px 16px 44px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0a0a0a;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        input:hover {
+            border-color: rgba(0, 0, 0, 0.12);
+            background: rgba(255, 255, 255, 1);
         }
 
         input:focus {
             outline: none;
             border-color: #3b82f6;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         input::placeholder {
-            color: #475569;
+            color: #adb5bd;
+            font-weight: 600;
         }
 
-        .calculate-btn {
+        .primary-button {
             width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 700;
+            padding: 16px 24px;
+            background: rgba(59, 130, 246, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 800;
             cursor: pointer;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            letter-spacing: -0.01em;
+            transition: all 0.2s ease;
+            margin-top: 8px;
         }
 
-        .calculate-btn:active {
-            transform: scale(0.98);
+        .primary-button:hover {
+            background: rgba(59, 130, 246, 0.18);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+        }
+
+        .primary-button:active {
+            transform: translateY(0);
+        }
+
+        .info-notice {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-left: 3px solid #3b82f6;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .info-notice-title {
+            color: #3b82f6;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+
+        .info-notice p {
+            color: #6c757d;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .info-notice p:last-child {
+            margin-bottom: 0;
         }
 
         .results-container {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 40px 20px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
         }
 
-        .result-main {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .results-modal {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #6c757d;
+            transition: all 0.2s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #0a0a0a;
+        }
+
+        .hero-metric {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             border-radius: 20px;
-            padding: 28px;
+            padding: 32px;
             margin-bottom: 20px;
-            border: 2px solid rgba(59, 130, 246, 0.2);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
-        .result-main::before {
+        .hero-metric::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
         }
 
-        .result-label {
-            color: #94a3b8;
+        .hero-metric-label {
+            color: #6c757d;
             font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 12px;
+        }
+
+        .hero-metric-value {
+            color: #0a0a0a;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .hero-metric-change {
+            color: #10b981;
+            font-size: 18px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .metric-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .metric-label {
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
             margin-bottom: 10px;
         }
 
-        .result-amount {
-            color: #ffffff;
-            font-size: 36px;
+        .metric-value {
+            color: #0a0a0a;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .section-icon {
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        .section-title {
+            color: #0a0a0a;
+            font-size: 15px;
             font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: -0.01em;
         }
 
-        .result-subtitle {
-            color: #64748b;
-            font-size: 13px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .stat-label {
-            color: #94a3b8;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            border-radius: 16px;
-            padding: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .highlight-text {
-            color: #10b981;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .comparison-section {
-            padding-top: 20px;
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-            margin-top: 20px;
-        }
-
-        .comparison-title {
-            color: #cbd5e1;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .comparison-item {
+        .data-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 14px 0;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        .comparison-item:last-child {
+        .data-row:last-child {
             border-bottom: none;
         }
 
-        .comparison-label {
-            color: #94a3b8;
-            font-size: 14px;
+        .data-row:hover {
+            background: rgba(59, 130, 246, 0.04);
+            margin: 0 -12px;
+            padding: 14px 12px;
+            border-radius: 8px;
         }
 
-        .comparison-value {
-            color: #ffffff;
-            font-size: 15px;
+        .data-label {
+            color: #6c757d;
+            font-size: 14px;
             font-weight: 600;
+        }
+
+        .data-value {
+            color: #0a0a0a;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: -0.01em;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
         }
 
-        thead tr {
-            background: rgba(59, 130, 246, 0.1);
-            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        thead {
+            background: rgba(0, 0, 0, 0.02);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         th {
-            padding: 12px 8px;
+            padding: 14px 12px;
             text-align: left;
-            color: #cbd5e1;
-            font-size: 11px;
+            color: #6c757d;
+            font-size: 12px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.01em;
         }
 
         th:nth-child(2), th:nth-child(3), th:nth-child(4) {
@@ -317,101 +489,105 @@
         }
 
         td {
-            padding: 12px 8px;
-            color: #e2e8f0;
-            font-size: 12px;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+            padding: 16px 12px;
+            color: #6c757d;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            font-weight: 600;
+        }
+
+        td:first-child {
+            color: #0a0a0a;
+            font-weight: 700;
         }
 
         td:nth-child(2), td:nth-child(3), td:nth-child(4) {
             text-align: right;
-            font-weight: 600;
+            font-weight: 800;
+            color: #0a0a0a;
         }
 
         tbody tr:hover {
-            background: rgba(59, 130, 246, 0.05);
+            background: rgba(59, 130, 246, 0.04);
         }
 
-        tfoot tr {
-            background: rgba(16, 185, 129, 0.1);
-            border-top: 2px solid rgba(16, 185, 129, 0.3);
+        tfoot {
+            background: rgba(16, 185, 129, 0.08);
+            border-top: 1px solid #10b981;
         }
 
         tfoot td {
             color: #10b981;
-            font-weight: 700;
-            font-size: 13px;
-        }
-
-        .deduction-box {
-            background: rgba(239, 68, 68, 0.1);
-            margin-top: 10px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .deduction-box .comparison-label {
-            color: #ef4444;
-            font-weight: 700;
-        }
-
-        .deduction-box .comparison-value {
-            color: #ef4444;
-            font-weight: 700;
-        }
-
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .info-box p {
-            color: #94a3b8;
-            font-size: 12px;
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-
-        .info-box p:last-child {
-            margin-bottom: 0;
+            font-weight: 900;
+            padding: 18px 12px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: #64748b;
+            margin-top: 48px;
+            padding: 24px;
+            color: #adb5bd;
             font-size: 12px;
+            font-weight: 500;
         }
 
         .footer p {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        @media (max-width: 968px) {
+        .footer-credit {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            color: #6c757d;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .footer-credit span {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 1200px) {
             .content-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .header h1 {
-                font-size: 28px;
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
             }
 
-            .card {
-                padding: 25px;
+            .header {
+                padding: 24px;
             }
 
-            .result-amount {
-                font-size: 30px;
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
             }
 
-            th, td {
-                padding: 10px 6px;
-                font-size: 10px;
+            .hero-metric-value {
+                font-size: 36px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-container {
+                padding: 20px 16px;
+            }
+
+            .results-modal {
+                padding: 28px 20px;
+            }
+
+            .close-button {
+                top: 16px;
+                right: 16px;
             }
         }
     </style>
@@ -419,22 +595,26 @@
 <body>
     <div class="main-container">
         <div class="header">
-            <div class="logo">💰</div>
-            <h1>Salary Calculator Platform</h1>
-            <p>Updated tax calculations for 2026</p>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>Salary Analysis</h1>
+                    <p>2026 Tax Calculation</p>
+                </div>
+            </div>
         </div>
 
         <div class="content-grid">
             <div class="card">
-                <div class="card-title">
-                    📊 Your Salary Information
+                <div class="card-header">
+                    <div class="card-title">Calculator</div>
+                    <div class="card-subtitle">Parameters</div>
                 </div>
 
                 <div class="input-group">
                     <label class="input-label">Current Gross Salary</label>
                     <div class="input-wrapper">
                         <div class="input-icon">₺</div>
-                        <input type="number" id="currentSalary" placeholder="25000" min="0" step="100">
+                        <input type="number" id="currentSalary" placeholder="25,000" min="0" step="100">
                     </div>
                 </div>
 
@@ -446,84 +626,79 @@
                     </div>
                 </div>
 
-                <button class="calculate-btn" onclick="calculate()">Calculate</button>
-
-                <div class="info-box">
-                    <p><strong>💡 Important:</strong> Income tax is calculated cumulatively throughout the year.</p>
-                    <p>Lower tax is withheld in January, while as the year progresses, higher tax brackets apply and more tax is deducted.</p>
-                    <p>The table shows the <strong>actual net salary</strong> for each month.</p>
-                </div>
+                <button class="primary-button" onclick="hesapla()">Calculate</button>
             </div>
 
-            <div class="card results-container" id="results">
-                <div class="card-title">
-                    ✨ Calculation Results
-                </div>
-
-                <div class="result-main">
-                    <div class="result-label">New Gross Salary</div>
-                    <div class="result-amount" id="newGross">₺ 0</div>
-                    <div class="result-subtitle">Pre-tax amount</div>
-                </div>
-
-                <div class="result-main">
-                    <div class="result-label">Average Monthly Net</div>
-                    <div class="result-amount" id="avgNet">₺ 0</div>
-                    <div class="result-subtitle">12-month average</div>
-                </div>
-
-                <div class="highlight-box">
-                    <div class="highlight-text" id="increase">
-                        📈 Calculating...
+        <div class="results-container" id="results">
+            <div class="results-modal">
+                <button class="close-button" onclick="closeResults()">✕</button>
+                
+                <div class="hero-metric">
+                    <div class="hero-metric-label">Annual Net Income Increase</div>
+                    <div class="hero-metric-value" id="increase">₺ 0</div>
+                    <div class="hero-metric-change" id="increasePercent">
+                        <span>↗</span>
+                        <span>%0</span>
                     </div>
                 </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Total Annual Net</div>
-                        <div class="stat-value" id="totalYearlyNet">₺ 0</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">New Gross</div>
+                        <div class="metric-value" id="newGross">₺ 0</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Annual Increase</div>
-                        <div class="stat-value" id="yearlyIncrease">₺ 0</div>
+                    <div class="metric-card">
+                        <div class="metric-label">Average Net</div>
+                        <div class="metric-value" id="avgNet">₺ 0</div>
                     </div>
-                </div>
-
-                <div class="comparison-section">
-                    <div class="comparison-title">Summary Comparison</div>
-                    
-                    <div class="comparison-item">
-                        <span class="comparison-label">Old Avg. Net Salary</span>
-                        <span class="comparison-value" id="oldAvgNet">₺ 0</span>
+                    <div class="metric-card">
+                        <div class="metric-label">Annual Net</div>
+                        <div class="metric-value" id="totalYearlyNet">₺ 0</div>
                     </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">New Avg. Net Salary</span>
-                        <span class="comparison-value" id="newAvgNet">₺ 0</span>
-                    </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">Increase Percentage</span>
-                        <span class="comparison-value" id="netPercent">%0</span>
+                    <div class="metric-card">
+                        <div class="metric-label">Increase</div>
+                        <div class="metric-value" id="yearlyIncrease">₺ 0</div>
                     </div>
                 </div>
 
-                <div class="comparison-section">
-                    <div class="comparison-title">📅 12-Month Detailed Income Table</div>
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <div class="section-title">Comparison</div>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Old Average</span>
+                        <span class="data-value" id="oldAvgNet">₺ 0</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">New Average</span>
+                        <span class="data-value" id="newAvgNet">₺ 0</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Increase Rate</span>
+                        <span class="data-value" id="netPercent">%0</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <div class="section-title">12-Month Projection</div>
+                    </div>
                     <div style="overflow-x: auto;">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>MONTH</th>
-                                    <th>NET SALARY</th>
-                                    <th>TAX</th>
-                                    <th>CUMULATIVE</th>
+                                    <th>Month</th>
+                                    <th>Net</th>
+                                    <th>Tax</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="monthlyTableBody">
-                                <!-- Filled by JavaScript -->
-                            </tbody>
+                            <tbody id="monthlyTableBody"></tbody>
                             <tfoot>
                                 <tr>
-                                    <td>TOTAL</td>
+                                    <td>Total</td>
                                     <td id="totalYearly">₺ 0</td>
                                     <td id="totalTax">₺ 0</td>
                                     <td id="totalSavings">₺ 0</td>
@@ -533,211 +708,208 @@
                     </div>
                 </div>
 
-                <div class="comparison-section">
-                    <div class="comparison-title">💸 Average Monthly Deductions</div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">SSI Employee Share (14%)</span>
-                        <span class="comparison-value" id="sgkAmount">₺ 0</span>
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon"></div>
+                        <div class="section-title">Deductions (Monthly Avg.)</div>
                     </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">Unemployment Insurance (1%)</span>
-                        <span class="comparison-value" id="unemploymentAmount">₺ 0</span>
+                    <div class="data-row">
+                        <span class="data-label">Social Security (14%)</span>
+                        <span class="data-value" id="sgkAmount">₺ 0</span>
                     </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">Income Tax (Average)</span>
-                        <span class="comparison-value" id="incomeTaxAmount">₺ 0</span>
+                    <div class="data-row">
+                        <span class="data-label">Unemployment (1%)</span>
+                        <span class="data-value" id="unemploymentAmount">₺ 0</span>
                     </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">Stamp Duty (0.759%)</span>
-                        <span class="comparison-value" id="stampTaxAmount">₺ 0</span>
+                    <div class="data-row">
+                        <span class="data-label">Income Tax</span>
+                        <span class="data-value" id="incomeTaxAmount">₺ 0</span>
                     </div>
-                    <div class="deduction-box comparison-item">
-                        <span class="comparison-label">Monthly Avg. Total Deduction</span>
-                        <span class="comparison-value" id="totalDeductions">₺ 0</span>
+                    <div class="data-row">
+                        <span class="data-label">Stamp Duty (0.759%)</span>
+                        <span class="data-value" id="stampTaxAmount">₺ 0</span>
+                    </div>
+                    <div class="data-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 0, 0, 0.08);">
+                        <span class="data-label" style="color: #0a0a0a; font-weight: 800;">Total Deductions</span>
+                        <span class="data-value" id="totalDeductions">₺ 0</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            <p>💡 Calculations are based on 2026 Turkey tax rates</p>
-            <p>SSI (14%) + Unemployment (1%) + Income Tax (Cumulative) + Stamp Duty (0.759%) included</p>
-            <p style="margin-top: 15px; font-weight: 600; color: #94a3b8;">
-                Design & Development: <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Metin Demirtel</span> © 2026
-            </p>
+            <div class="info-notice" style="max-width: 600px; margin: 0 auto 24px auto;">
+                <div class="info-notice-title">Cumulative Tax</div>
+                <p>Income tax is calculated cumulatively throughout the year.</p>
+                <p>Lower tax in January, higher tax in December.</p>
+            </div>
+            <p>Calculated according to 2026 Turkish tax legislation</p>
+            <p>Social Security • Unemployment • Income Tax • Stamp Duty</p>
+            <div class="footer-credit">
+                <span>Metin Demirtel</span> © 2026
+            </div>
         </div>
     </div>
 
     <script>
-        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+        var ayIsimleri = ['January', 'February', 'March', 'April', 'May', 'June', 
                           'July', 'August', 'September', 'October', 'November', 'December'];
 
-        // Cumulative income tax calculation function
-        function calculateCumulativeTax(annualCumulativeBase) {
-            var tax = 0;
-            
-            if (annualCumulativeBase <= 110000) {
-                tax = annualCumulativeBase * 0.15;
-            } else if (annualCumulativeBase <= 230000) {
-                tax = 110000 * 0.15 + (annualCumulativeBase - 110000) * 0.20;
-            } else if (annualCumulativeBase <= 580000) {
-                tax = 110000 * 0.15 + 120000 * 0.20 + (annualCumulativeBase - 230000) * 0.27;
-            } else if (annualCumulativeBase <= 3000000) {
-                tax = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + (annualCumulativeBase - 580000) * 0.35;
-            } else {
-                tax = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + 2420000 * 0.35 + (annualCumulativeBase - 3000000) * 0.40;
-            }
-            
-            return tax;
+        function closeResults() {
+            document.getElementById('results').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
-        // 12-month detailed calculation
-        function calculateYearlyDetails(monthlyGross) {
-            var monthlyDetails = [];
-            var cumulativeBase = 0;
-            var previousMonthCumulativeTax = 0;
+        function showResults() {
+            document.getElementById('results').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ESC tuşu ile kapat
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeResults();
+            }
+        });
+
+        // Background'a tıklayınca kapat
+        document.getElementById('results').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResults();
+            }
+        });
+
+        function kumVergiHesapla(yillikKumulatifMatrah) {
+            var vergi = 0;
+            if (yillikKumulatifMatrah <= 110000) {
+                vergi = yillikKumulatifMatrah * 0.15;
+            } else if (yillikKumulatifMatrah <= 230000) {
+                vergi = 110000 * 0.15 + (yillikKumulatifMatrah - 110000) * 0.20;
+            } else if (yillikKumulatifMatrah <= 580000) {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + (yillikKumulatifMatrah - 230000) * 0.27;
+            } else if (yillikKumulatifMatrah <= 3000000) {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + (yillikKumulatifMatrah - 580000) * 0.35;
+            } else {
+                vergi = 110000 * 0.15 + 120000 * 0.20 + 350000 * 0.27 + 2420000 * 0.35 + (yillikKumulatifMatrah - 3000000) * 0.40;
+            }
+            return vergi;
+        }
+
+        function yillikDetayHesapla(aylikBrut) {
+            var aylikDetaylar = [];
+            var kumulatifMatrah = 0;
+            var oncekiAyKumulatifVergi = 0;
             
             for (var i = 0; i < 12; i++) {
-                var ssi = monthlyGross * 0.14;
-                var unemployment = monthlyGross * 0.01;
-                var stamp = monthlyGross * 0.00759;
+                var sgk = aylikBrut * 0.14;
+                var issizlik = aylikBrut * 0.01;
+                var damga = aylikBrut * 0.00759;
+                var aylikMatrah = aylikBrut - sgk - issizlik;
+                kumulatifMatrah += aylikMatrah;
+                var kumulatifVergi = kumVergiHesapla(kumulatifMatrah);
+                var buAyVergi = kumulatifVergi - oncekiAyKumulatifVergi;
+                var netMaas = aylikBrut - sgk - issizlik - buAyVergi - damga;
                 
-                var monthlyBase = monthlyGross - ssi - unemployment;
-                cumulativeBase += monthlyBase;
-                
-                // Total tax to be paid up to this month
-                var cumulativeTax = calculateCumulativeTax(cumulativeBase);
-                
-                // This month's tax = Total tax - Tax paid in previous months
-                var thisMonthTax = cumulativeTax - previousMonthCumulativeTax;
-                
-                var netSalary = monthlyGross - ssi - unemployment - thisMonthTax - stamp;
-                
-                monthlyDetails.push({
-                    month: i + 1,
-                    gross: monthlyGross,
-                    ssi: ssi,
-                    unemployment: unemployment,
-                    incomeTax: thisMonthTax,
-                    stamp: stamp,
-                    net: netSalary,
-                    totalDeduction: ssi + unemployment + thisMonthTax + stamp
+                aylikDetaylar.push({
+                    ay: i + 1,
+                    brut: aylikBrut,
+                    sgk: sgk,
+                    issizlik: issizlik,
+                    gelirVergisi: buAyVergi,
+                    damga: damga,
+                    net: netMaas,
+                    toplamKesinti: sgk + issizlik + buAyVergi + damga
                 });
-                
-                previousMonthCumulativeTax = cumulativeTax;
+                oncekiAyKumulatifVergi = kumulatifVergi;
             }
-            
-            return monthlyDetails;
+            return aylikDetaylar;
         }
 
-        function formatCurrency(amount) {
-            return amount.toLocaleString('en-US', {
+        function paraFormat(miktar) {
+            return miktar.toLocaleString('tr-TR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
         }
 
-        function calculate() {
-            var currentSalary = parseFloat(document.getElementById('currentSalary').value);
-            var increaseRate = parseFloat(document.getElementById('increaseRate').value);
+        function hesapla() {
+            var mevcutMaas = parseFloat(document.getElementById('currentSalary').value);
+            var zamOrani = parseFloat(document.getElementById('increaseRate').value);
 
-            if (!currentSalary || !increaseRate) {
-                alert('⚠️ Please fill in all fields!');
+            if (!mevcutMaas || !zamOrani) {
+                alert('Please fill in all fields');
                 return;
             }
 
-            if (currentSalary < 0 || increaseRate < 0) {
-                alert('⚠️ Please enter positive values!');
+            if (mevcutMaas < 0 || zamOrani < 0) {
+                alert('Please enter positive values');
                 return;
             }
 
-            var newGross = currentSalary * (1 + increaseRate / 100);
+            var yeniBrut = mevcutMaas * (1 + zamOrani / 100);
+            var eskiDetaylar = yillikDetayHesapla(mevcutMaas);
+            var yeniDetaylar = yillikDetayHesapla(yeniBrut);
             
-            // 12-month detailed calculation for old and new salaries
-            var oldDetails = calculateYearlyDetails(currentSalary);
-            var newDetails = calculateYearlyDetails(newGross);
-            
-            // Annual totals
-            var oldTotalNet = 0;
-            var newTotalNet = 0;
-            var newTotalTax = 0;
+            var eskiToplamNet = 0;
+            var yeniToplamNet = 0;
+            var yeniToplamVergi = 0;
             
             for (var i = 0; i < 12; i++) {
-                oldTotalNet += oldDetails[i].net;
-                newTotalNet += newDetails[i].net;
-                newTotalTax += newDetails[i].incomeTax;
+                eskiToplamNet += eskiDetaylar[i].net;
+                yeniToplamNet += yeniDetaylar[i].net;
+                yeniToplamVergi += yeniDetaylar[i].gelirVergisi;
             }
             
-            var oldAvgNet = oldTotalNet / 12;
-            var newAvgNet = newTotalNet / 12;
-            var yearlyIncrease = newTotalNet - oldTotalNet;
-            var netPercent = ((newAvgNet - oldAvgNet) / oldAvgNet * 100).toFixed(2);
+            var eskiOrtNet = eskiToplamNet / 12;
+            var yeniOrtNet = yeniToplamNet / 12;
+            var yillikArtis = yeniToplamNet - eskiToplamNet;
+            var netYuzde = ((yeniOrtNet - eskiOrtNet) / eskiOrtNet * 100).toFixed(2);
             
-            // Average deductions
-            var avgSsi = newGross * 0.14;
-            var avgUnemployment = newGross * 0.01;
-            var avgTax = newTotalTax / 12;
-            var avgStamp = newGross * 0.00759;
-            var avgTotalDeduction = avgSsi + avgUnemployment + avgTax + avgStamp;
+            var ortSgk = yeniBrut * 0.14;
+            var ortIssizlik = yeniBrut * 0.01;
+            var ortVergi = yeniToplamVergi / 12;
+            var ortDamga = yeniBrut * 0.00759;
+            var ortToplamKesinti = ortSgk + ortIssizlik + ortVergi + ortDamga;
 
-            // Basic results
-            document.getElementById('newGross').textContent = '₺ ' + formatCurrency(newGross);
-            document.getElementById('avgNet').textContent = '₺ ' + formatCurrency(newAvgNet);
-            document.getElementById('oldAvgNet').textContent = '₺ ' + formatCurrency(oldAvgNet);
-            document.getElementById('newAvgNet').textContent = '₺ ' + formatCurrency(newAvgNet);
-            document.getElementById('totalYearlyNet').textContent = '₺ ' + formatCurrency(newTotalNet);
-            document.getElementById('yearlyIncrease').textContent = '₺ ' + formatCurrency(yearlyIncrease);
-            document.getElementById('netPercent').textContent = '%' + netPercent;
-            document.getElementById('increase').textContent = '📈 You will earn ₺' + formatCurrency(yearlyIncrease) + ' more per year!';
+            document.getElementById('newGross').textContent = '₺ ' + paraFormat(yeniBrut);
+            document.getElementById('avgNet').textContent = '₺ ' + paraFormat(yeniOrtNet);
+            document.getElementById('oldAvgNet').textContent = '₺ ' + paraFormat(eskiOrtNet);
+            document.getElementById('newAvgNet').textContent = '₺ ' + paraFormat(yeniOrtNet);
+            document.getElementById('totalYearlyNet').textContent = '₺ ' + paraFormat(yeniToplamNet);
+            document.getElementById('yearlyIncrease').textContent = '₺ ' + paraFormat(yillikArtis);
+            document.getElementById('netPercent').textContent = '%' + netYuzde;
+            document.getElementById('increase').textContent = '₺ ' + paraFormat(yillikArtis);
+            document.getElementById('increasePercent').innerHTML = '<span>↗</span><span>%' + netYuzde + '</span>';
+            document.getElementById('sgkAmount').textContent = '₺ ' + paraFormat(ortSgk);
+            document.getElementById('unemploymentAmount').textContent = '₺ ' + paraFormat(ortIssizlik);
+            document.getElementById('incomeTaxAmount').textContent = '₺ ' + paraFormat(ortVergi);
+            document.getElementById('stampTaxAmount').textContent = '₺ ' + paraFormat(ortDamga);
+            document.getElementById('totalDeductions').textContent = '₺ ' + paraFormat(ortToplamKesinti);
 
-            // Deduction details
-            document.getElementById('sgkAmount').textContent = '₺ ' + formatCurrency(avgSsi);
-            document.getElementById('unemploymentAmount').textContent = '₺ ' + formatCurrency(avgUnemployment);
-            document.getElementById('incomeTaxAmount').textContent = '₺ ' + formatCurrency(avgTax);
-            document.getElementById('stampTaxAmount').textContent = '₺ ' + formatCurrency(avgStamp);
-            document.getElementById('totalDeductions').textContent = '₺ ' + formatCurrency(avgTotalDeduction);
-
-            // 12-Month Table
             var tableBody = document.getElementById('monthlyTableBody');
             tableBody.innerHTML = '';
-            var cumulativeTotal = 0;
-            var totalTax = 0;
+            var birikimToplam = 0;
+            var toplamVergi = 0;
 
             for (var i = 0; i < 12; i++) {
-                cumulativeTotal += newDetails[i].net;
-                totalTax += newDetails[i].incomeTax;
-                
+                birikimToplam += yeniDetaylar[i].net;
+                toplamVergi += yeniDetaylar[i].gelirVergisi;
                 var row = tableBody.insertRow();
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-                var cell4 = row.insertCell(3);
-                
-                cell1.textContent = monthNames[i];
-                cell2.textContent = '₺ ' + formatCurrency(newDetails[i].net);
-                cell3.textContent = '₺ ' + formatCurrency(newDetails[i].incomeTax);
-                cell4.textContent = '₺ ' + formatCurrency(cumulativeTotal);
+                row.insertCell(0).textContent = ayIsimleri[i];
+                row.insertCell(1).textContent = '₺ ' + paraFormat(yeniDetaylar[i].net);
+                row.insertCell(2).textContent = '₺ ' + paraFormat(yeniDetaylar[i].gelirVergisi);
+                row.insertCell(3).textContent = '₺ ' + paraFormat(birikimToplam);
             }
 
-            document.getElementById('totalYearly').textContent = '₺ ' + formatCurrency(newTotalNet);
-            document.getElementById('totalTax').textContent = '₺ ' + formatCurrency(totalTax);
-            document.getElementById('totalSavings').textContent = '₺ ' + formatCurrency(cumulativeTotal);
-
-            document.getElementById('results').style.display = 'block';
+            document.getElementById('totalYearly').textContent = '₺ ' + paraFormat(yeniToplamNet);
+            document.getElementById('totalTax').textContent = '₺ ' + paraFormat(toplamVergi);
+            document.getElementById('totalSavings').textContent = '₺ ' + paraFormat(birikimToplam);
             
-            setTimeout(function() {
-                document.getElementById('results').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'nearest' 
-                });
-            }, 100);
+            showResults();
         }
 
-        // Calculate with Enter key
         document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculate();
-            }
+            if (e.key === 'Enter') hesapla();
         });
     </script>
 </body>
